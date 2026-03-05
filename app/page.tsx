@@ -35,6 +35,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!map.current || communities.length === 0) return
+const currentMap = map.current
 
     communities.forEach((community) => {
       const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
@@ -49,7 +50,7 @@ export default function Home() {
       new mapboxgl.Marker({ color: '#2563eb' })
         .setLngLat([community.longitude, community.latitude])
         .setPopup(popup)
-        .addTo(map.current)
+        .addTo(currentMap)
     })
   }, [communities])
 
