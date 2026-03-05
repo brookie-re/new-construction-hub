@@ -10,7 +10,7 @@ mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
 export default function Home() {
   const mapContainer = useRef(null)
   const map = useRef(null)
-  const [communities, setCommunities] = useState([])
+  const [communities, setCommunities] = useState<any[]>([])
 
   useEffect(() => {
     fetchCommunities()
