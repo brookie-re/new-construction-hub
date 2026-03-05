@@ -9,12 +9,14 @@ export default function CommunityPage() {
   const { id } = useParams()
   const [community, setCommunity] = useState(null)
   const [floorPlans, setFloorPlans] = useState([])
+  const [listings, setListings] = useState([])
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
 
   useEffect(() => {
     fetchCommunity()
     fetchFloorPlans()
+    fetchListings()
   }, [id])
 
   async function fetchCommunity() {
@@ -25,6 +27,10 @@ export default function CommunityPage() {
   async function fetchFloorPlans() {
     const { data } = await supabase.from('floor_plans').select('*').eq('community_id', id)
     if (data) setFloorPlans(data)
+  }
+async function fetchListings() {
+    const { data } = await supabase.from('listings').select('*').eq('community_id', id).eq('status', 'available')
+    if (data) setListings(data)
   }
 
   async function handleSubmit() {
@@ -73,6 +79,39 @@ export default function CommunityPage() {
                 <p style={{ color: '#94a3b8', lineHeight: 1.6, margin: 0 }}>{community.description}</p>
               </div>
             )}
+
+            {/* Homes For Sale */}
+<div style={{ background: '#1e293b', borderRadius: 12, padding: 24, marginBottom: 24 }}>
+  <h2 style={{ margin: '0 0 20px', fontSize: 20 }}>🏠 Homes For Sale ({listings.length})</h2>
+  {listings.length === 0 ? (
+    <p style={{ color: '#94a3b8' }}>No available listings at this time.</p>
+  ) : (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
+      {listings.map(listing => (
+        <div key={listing.id} style={{ background: '#0f172a', borderRadius: 8, overflow: 'hidden', border: '1px solid #334155' }}>
+          {listing.image_url && (
+            <img
+              src={listing.image_url}
+              alt={listing.address}
+              style={{ width: '100%', height: 180, objectFit: 'cover' }}
+            />
+          )}
+          <div style={{ padding: 16 }}>
+            <div style={{ fontSize: 22, fontWeight: 'bold', color: '#60a5fa', marginBottom: 4 }}>
+              ${listing.price?.toLocaleString()}
+            </div>
+            <div style={{ fontWeight: 'bold', marginBottom: 8 }}>{listing.address}</div>
+            <div style={{ color: '#94a3b8', fontSize: 13 }}>
+              {listing.beds && `${listing.beds} bed · `}
+              {listing.baths && `${listing.baths} bath · `}
+              {listing.sqft && `${listing.sqft?.toLocaleString()} sqft`}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
 
             {/* Floor Plans */}
             <div style={{ background: '#1e293b', borderRadius: 12, padding: 24 }}>
