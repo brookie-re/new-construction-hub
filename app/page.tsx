@@ -22,7 +22,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (map.current) || !mapContainer.current) return
+    if (map.current || !mapContainer.current) return
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/dark-v11',
