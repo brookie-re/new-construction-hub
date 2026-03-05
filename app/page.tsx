@@ -8,8 +8,8 @@ import { supabase } from '@/lib/supabase'
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
 
 export default function Home() {
-  const mapContainer = useRef(null)
-  const map = useRef(null)
+  const mapContainer = useRef<HTMLDivElement>(null)
+  const map = useRef<mapboxgl.Map | null>(null)
   const [communities, setCommunities] = useState<any[]>([])
 
   useEffect(() => {
