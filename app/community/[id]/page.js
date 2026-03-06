@@ -38,15 +38,15 @@ async function fetchListings() {
     setSubmitted(true)
   }
 
-  if (!community) return <div style={{ padding: 40, color: 'white', background: '#0f172a', minHeight: '100vh' }}>Loading...</div>
+  if (!community) return <div style={{ padding: 40,color: '#1e293b', background: '#f1f5f9', minHeight: '100vh' }}>Loading...</div>
 
   return (
-    <div style={{ background: '#0f172a', minHeight: '100vh', color: 'white', fontFamily: 'sans-serif' }}>
+    <div style={{ background: '#f1f5f9', minHeight: '100vh',color: '#1e293b', fontFamily: 'sans-serif' }}>
 
       {/* Header */}
-      <div style={{ background: '#1e293b', padding: '16px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ background: '#ffffff', padding: '16px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Link href="/" style={{ color: '#60a5fa', textDecoration: 'none', fontSize: 14 }}>← Back to Map</Link>
-        <div style={{ fontSize: 13, color: '#94a3b8' }}>New Construction Huntsville</div>
+        <div style={{ fontSize: 13, color: '#64748b' }}>New Construction Huntsville</div>
       </div>
 
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '40px 24px' }}>
@@ -54,8 +54,8 @@ async function fetchListings() {
         {/* Hero */}
         <div style={{ marginBottom: 40 }}>
           <div style={{ fontSize: 13, color: '#60a5fa', marginBottom: 8 }}>NEW CONSTRUCTION</div>
-          <h1 style={{ fontSize: 36, fontWeight: 'bold', margin: '0 0 8px' }}>{community.name}</h1>
-          <p style={{ color: '#94a3b8', margin: '0 0 16px' }}>By <strong style={{ color: 'white' }}>{community.builder}</strong> · {community.city}, {community.state}</p>
+          <h1 style={{ fontSize: 36, fontWeight: 'bold', margin: '0 0 8px', color: '#0f172a' }}>{community.name}</h1>
+          <p style={{ color: '#64748b', margin: '0 0 16px' }}>By <strong style={{color: '#1e293b' }}>{community.builder}</strong> · {community.city}, {community.state}</p>
           <div style={{ display: 'flex', gap: 16 }}>
             <span style={{ background: '#1e3a5f', color: '#60a5fa', padding: '6px 14px', borderRadius: 20, fontSize: 14 }}>
               From ${community.price_from?.toLocaleString()}
@@ -74,21 +74,21 @@ async function fetchListings() {
           <div>
             {/* Description */}
             {community.description && (
-              <div style={{ background: '#1e293b', borderRadius: 12, padding: 24, marginBottom: 24 }}>
+              <div style={{ background: '#ffffff', borderRadius: 12, padding: 24, marginBottom: 24 }}>
                 <h2 style={{ margin: '0 0 12px', fontSize: 20 }}>About This Community</h2>
-                <p style={{ color: '#94a3b8', lineHeight: 1.6, margin: 0 }}>{community.description}</p>
+                <p style={{ color: '#1e3a5f', lineHeight: 1.6, margin: 0 }}>{community.description}</p>
               </div>
             )}
 
             {/* Homes For Sale */}
-<div style={{ background: '#1e293b', borderRadius: 12, padding: 24, marginBottom: 24 }}>
+<div style={{ background: '#ffffff', borderRadius: 12, padding: 24, marginBottom: 24 }}>
   <h2 style={{ margin: '0 0 20px', fontSize: 20 }}>🏠 Homes For Sale ({listings.length})</h2>
   {listings.length === 0 ? (
-    <p style={{ color: '#94a3b8' }}>No available listings at this time.</p>
+    <p style={{ color: '#64748b' }}>No available listings at this time.</p>
   ) : (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
       {listings.map(listing => (
-        <div key={listing.id} style={{ background: '#0f172a', borderRadius: 8, overflow: 'hidden', border: '1px solid #334155' }}>
+        <div key={listing.id} style={{ background: '#f1f5f9', borderRadius: 8, overflow: 'hidden', border: '1px solid #e2e8f0' }}>
           {listing.image_url && (
             <img
               src={listing.image_url}
@@ -101,10 +101,12 @@ async function fetchListings() {
               ${listing.price?.toLocaleString()}
             </div>
             <div style={{ fontWeight: 'bold', marginBottom: 8 }}>{listing.address}</div>
-            <div style={{ color: '#94a3b8', fontSize: 13 }}>
-              {listing.beds && `${listing.beds} bed · `}
-              {listing.baths && `${listing.baths} bath · `}
-              {listing.sqft && `${listing.sqft?.toLocaleString()} sqft`}
+            <div style={{ color: '#64748b', fontSize: 13, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+              {listing.beds && <span>🛏 {listing.beds} bed</span>}
+              {listing.baths && <span>🚿 {listing.baths} bath</span>}
+              {listing.garage && <span>🚗 {listing.garage} garage</span>}
+              {listing.stories && <span>🏠 {listing.stories} story</span>}
+              {listing.sqft && <span>📐 {listing.sqft?.toLocaleString()} sqft</span>}
             </div>
           </div>
         </div>
@@ -114,17 +116,17 @@ async function fetchListings() {
 </div>
 
             {/* Floor Plans */}
-            <div style={{ background: '#1e293b', borderRadius: 12, padding: 24 }}>
+            <div style={{ background: '#ffffff', borderRadius: 12, padding: 24 }}>
               <h2 style={{ margin: '0 0 20px', fontSize: 20 }}>Floor Plans</h2>
               {floorPlans.length === 0 ? (
-                <p style={{ color: '#94a3b8' }}>Floor plans coming soon.</p>
+                <p style={{ color: '#64748b' }}>Floor plans coming soon.</p>
               ) : (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16 }}>
                   {floorPlans.map(plan => (
-                    <div key={plan.id} style={{ background: '#0f172a', borderRadius: 8, padding: 16, border: '1px solid #334155' }}>
+                    <div key={plan.id} style={{ background: '#f1f5f9', borderRadius: 8, padding: 16, border: '1px solid #e2e8f0' }}>
                       <div style={{ fontWeight: 'bold', marginBottom: 8 }}>{plan.name}</div>
-                      <div style={{ color: '#94a3b8', fontSize: 14 }}>{plan.beds} bed · {plan.baths} bath</div>
-                      <div style={{ color: '#94a3b8', fontSize: 14 }}>{plan.sqft?.toLocaleString()} sqft</div>
+                      <div style={{ color: '#64748b', fontSize: 14 }}>{plan.beds} bed · {plan.baths} bath</div>
+                      <div style={{ color: '#64748b', fontSize: 14 }}>{plan.sqft?.toLocaleString()} sqft</div>
                       {plan.price && <div style={{ color: '#60a5fa', fontWeight: 'bold', marginTop: 8 }}>${plan.price?.toLocaleString()}</div>}
                     </div>
                   ))}
@@ -134,9 +136,9 @@ async function fetchListings() {
           </div>
 
           {/* Lead Form */}
-          <div style={{ background: '#1e293b', borderRadius: 12, padding: 24, height: 'fit-content', position: 'sticky', top: 24 }}>
+          <div style={{ background: '#ffffff', borderRadius: 12, padding: 24, height: 'fit-content', position: 'sticky', top: 24 }}>
             <h2 style={{ margin: '0 0 4px', fontSize: 20 }}>Get More Info</h2>
-            <p style={{ color: '#94a3b8', fontSize: 13, margin: '0 0 20px' }}>I'll personally connect you with this community.</p>
+            <p style={{ color: 'ffffff', fontSize: 13, margin: '0 0 20px' }}>I'll personally connect you with this community.</p>
 
             {submitted ? (
               <div style={{ textAlign: 'center', padding: 20 }}>
@@ -146,15 +148,15 @@ async function fetchListings() {
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 <input placeholder="Your Name" value={form.name} onChange={e => setForm({...form, name: e.target.value})}
-                  style={{ background: '#0f172a', border: '1px solid #334155', borderRadius: 8, padding: '10px 14px', color: 'white', fontSize: 14 }} />
+                  style={{ background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: 8, padding: '10px 14px',color: '#1e293b', fontSize: 14 }} />
                 <input placeholder="Email Address" value={form.email} onChange={e => setForm({...form, email: e.target.value})}
-                  style={{ background: '#0f172a', border: '1px solid #334155', borderRadius: 8, padding: '10px 14px', color: 'white', fontSize: 14 }} />
+                  style={{ background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: 8, padding: '10px 14px',color: '#1e293b', fontSize: 14 }} />
                 <input placeholder="Phone Number" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})}
-                  style={{ background: '#0f172a', border: '1px solid #334155', borderRadius: 8, padding: '10px 14px', color: 'white', fontSize: 14 }} />
+                  style={{ background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: 8, padding: '10px 14px',color: '#1e293b', fontSize: 14 }} />
                 <textarea placeholder="Any questions?" value={form.message} onChange={e => setForm({...form, message: e.target.value})}
-                  rows={3} style={{ background: '#0f172a', border: '1px solid #334155', borderRadius: 8, padding: '10px 14px', color: 'white', fontSize: 14, resize: 'none' }} />
+                  rows={3} style={{ background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: 8, padding: '10px 14px',color: '#1e293b', fontSize: 14, resize: 'none' }} />
                 <button onClick={handleSubmit}
-                  style={{ background: '#2563eb', color: 'white', border: 'none', borderRadius: 8, padding: '12px', fontSize: 15, fontWeight: 'bold', cursor: 'pointer' }}>
+                  style={{ background: '#2563eb',color: '#1e293b', border: 'none', borderRadius: 8, padding: '12px', fontSize: 15, fontWeight: 'bold', cursor: 'pointer' }}>
                   Request Information
                 </button>
               </div>

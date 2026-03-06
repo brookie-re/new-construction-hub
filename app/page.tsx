@@ -58,11 +58,11 @@ const currentMap = map.current
     <main style={{ width: '100vw', height: '100vh', position: 'relative' }}>
       <div style={{
         position: 'absolute', top: 20, left: 20, zIndex: 10,
-        background: 'rgba(0,0,0,0.8)', color: 'white',
+        background: 'rgba(255,255,255,0.95)', color: '#0f172a',
         padding: '16px 20px', borderRadius: '8px'
       }}>
         <h1 style={{ margin: 0, fontSize: '20px', fontWeight: 'bold' }}>🏠 New Construction Huntsville</h1>
-        <p style={{ margin: '4px 0 0', fontSize: '14px', opacity: 0.7 }}>{communities.length} communities found</p>
+        <p style={{ margin: '4px 0 0', fontSize: '14px', opacity: 0.6, color: '#64748b' }}>{communities.length} communities found</p>
       </div>
       <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />
     </main>

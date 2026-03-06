@@ -6,8 +6,7 @@ from playwright.async_api import async_playwright
 from supabase import create_client
 
 SUPABASE_URL = "https://gytsnlximrlantchvsee.supabase.co"
-SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd5dHNubHhpbXJsYW50Y2h2c2VlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2NzM5MDEsImV4cCI6MjA4ODI0OTkwMX0.8A1lSPW5K1s_kjWm5gJAjMwUICAsHh5DQCGyBMmSE_E"
-SUPABASE_SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd5dHNubHhpbXJsYW50Y2h2c2VlIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjY3MzkwMSwiZXhwIjoyMDg4MjQ5OTAxfQ.DG-0zbWJ7bH2N_llHdZinvoVsZCs2VIyd7TI4X4__nE"
+from config import SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_KEY
 
 supabase = create_client(SUPABASE_URL, SUPABASE_ANON_KEY)
 supabase_admin = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
@@ -102,6 +101,21 @@ async def scrape_listings(page, community):
             address = await address_el.inner_text() if address_el else "Unknown"
             address = address.strip()
 
+            # Details - beds, baths, garage, stories, sqft
+            details_text = await card.inner_text()
+            
+            beds_match = re.search(r'(\d+)\s*Bed', details_text)
+            baths_match = re.search(r'(\d+\.?\d*)\s*Bath', details_text)
+            garage_match = re.search(r'(\d+)\s*Garage', details_text)
+            stories_match = re.search(r'(\d+)\s*Story', details_text)
+            sqft_match = re.search(r'([0-9,]+)\s*Sq\.\s*Ft', details_text)
+
+            beds = int(beds_match.group(1)) if beds_match else None
+            baths = float(baths_match.group(1)) if baths_match else None
+            garage = int(garage_match.group(1)) if garage_match else None
+            stories = int(stories_match.group(1)) if stories_match else None
+            sqft = int(sqft_match.group(1).replace(',', '')) if sqft_match else None
+
             # Image - extract from background-image style
             img_el = await card.query_selector('.card-image')
             image_url = None
@@ -122,6 +136,11 @@ async def scrape_listings(page, community):
                 'address': address,
                 'price': price,
                 'image_url': image_url,
+                'beds': beds,
+                'baths': baths,
+                'garage': garage,
+                'stories': stories,
+                'sqft': sqft,
                 'status': 'available'
             }, on_conflict='address').execute()
 
