@@ -19,6 +19,13 @@ COMMUNITY_URLS = [
         "city": "Huntsville",
         "latitude": 34.7938,
         "longitude": -86.5647
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/madison/wheeler-lake-at-greenbrier-preserve",
+        "name": "Wheeler Lake at Greenbrier Preserve",
+        "city": "Madison",
+        "latitude": 34.7721,
+        "longitude": -86.7481
     }
 ]
 
