@@ -23,7 +23,17 @@ export default function Home() {
   const [beds, setBeds] = useState(0)
   const [builder, setBuilder] = useState('')
   const [city, setCity] = useState('')
+  const [showMap, setShowMap] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  
   useEffect(() => {
     supabase.from('communities').select('*').then(({ data }) => {
       if (data) setCommunities(data)
@@ -98,9 +108,10 @@ export default function Home() {
 
   const ss: React.CSSProperties = { padding: '8px 12px', borderRadius: '6px', border: '1px solid #e2e8f0', fontSize: '14px', background: 'white', cursor: 'pointer', color: '#1e293b' }
 
-  return (
+ return (
     <main style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
-      <div style={{ background: 'white', borderBottom: '1px solid #e2e8f0', padding: '12px 20px', display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', zIndex: 10 }}>
+      {/* Filter Bar */}
+      <div style={{ background: 'white', borderBottom: '1px solid #e2e8f0', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', zIndex: 10 }}>
         <span style={{ fontWeight: 'bold', fontSize: '16px' }}>{'🏠 NCH'}</span>
         <select value={priceMax} onChange={e => setPriceMax(Number(e.target.value))} style={ss}>
           <option value={1000000}>{'Any Price'}</option>
@@ -118,43 +129,82 @@ export default function Home() {
           <option value={4}>{'4+ Beds'}</option>
           <option value={5}>{'5+ Beds'}</option>
         </select>
-        <select value={builder} onChange={e => setBuilder(e.target.value)} style={ss}>
-          <option value={''}>{'Any Builder'}</option>
-          {BUILDERS.map(b => <option key={b} value={b}>{b}</option>)}
-        </select>
-        <select value={city} onChange={e => setCity(e.target.value)} style={ss}>
-          <option value={''}>{'Any City'}</option>
-          {CITIES.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
+        {!isMobile && (
+          <select value={builder} onChange={e => setBuilder(e.target.value)} style={ss}>
+            <option value={''}>{'Any Builder'}</option>
+            {BUILDERS.map(b => <option key={b} value={b}>{b}</option>)}
+          </select>
+        )}
+        {!isMobile && (
+          <select value={city} onChange={e => setCity(e.target.value)} style={ss}>
+            <option value={''}>{'Any City'}</option>
+            {CITIES.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+        )}
         <span style={{ marginLeft: 'auto', fontSize: '14px', color: '#64748b' }}>{loading ? 'Loading...' : listings.length + ' homes'}</span>
       </div>
 
-      <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
-        <div style={{ width: '400px', minWidth: '340px', overflowY: 'auto', background: '#f8fafc', borderRight: '1px solid #e2e8f0' }}>
-          {loading && <div style={{ padding: '40px', textAlign: 'center', color: '#64748b' }}>{'Loading homes...'}</div>}
-          {!loading && listings.length === 0 && <div style={{ padding: '40px', textAlign: 'center', color: '#64748b' }}>{'No homes match your filters.'}</div>}
-          {!loading && listings.map((listing) => (
-            <div
-              key={listing.id}
-              ref={(el: HTMLDivElement | null) => { cardRefs.current[listing.id] = el }}
-              onClick={() => handleCardClick(listing)}
-              style={{ background: activeListingId === listing.id ? '#eff6ff' : 'white', border: activeListingId === listing.id ? '2px solid #2563eb' : '1px solid #e2e8f0', borderRadius: '8px', margin: '12px', cursor: 'pointer', overflow: 'hidden' }}
-            >
-              {listing.image_url && <img src={listing.image_url} alt={listing.address} style={{ width: '100%', height: '180px', objectFit: 'cover' }} />}
-              <div style={{ padding: '12px' }}>
-                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#1e293b' }}>{listing.price ? '$' + listing.price.toLocaleString() : 'Price N/A'}</div>
-                <div style={{ fontSize: '13px', color: '#475569', margin: '4px 0' }}>
-                  {[listing.beds ? listing.beds + ' bd' : null, listing.baths ? listing.baths + ' ba' : null, listing.sqft ? listing.sqft.toLocaleString() + ' sqft' : null].filter(Boolean).join(' · ')}
-                </div>
-                <div style={{ fontSize: '13px', color: '#64748b' }}>{listing.address}</div>
-                <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>{listing.communities?.name + ' · ' + listing.communities?.builder}</div>
-                <div onClick={(e) => { e.stopPropagation(); window.location.href = '/community/' + listing.community_id }} style={{ display: 'inline-block', marginTop: '10px', background: '#2563eb', color: 'white', padding: '6px 14px', borderRadius: '4px', fontSize: '12px', cursor: 'pointer' }}>{'View Community'}</div>
-              </div>
-            </div>
-          ))}
+      {/* Mobile: extra filter row */}
+      {isMobile && (
+        <div style={{ background: 'white', borderBottom: '1px solid #e2e8f0', padding: '8px 16px', display: 'flex', gap: '8px' }}>
+          <select value={builder} onChange={e => setBuilder(e.target.value)} style={{ ...ss, flex: 1 }}>
+            <option value={''}>{'Any Builder'}</option>
+            {BUILDERS.map(b => <option key={b} value={b}>{b}</option>)}
+          </select>
+          <select value={city} onChange={e => setCity(e.target.value)} style={{ ...ss, flex: 1 }}>
+            <option value={''}>{'Any City'}</option>
+            {CITIES.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
         </div>
-        <div ref={mapContainer} style={{ flex: 1, height: '100%' }} />
+      )}
+
+      {/* Body */}
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', position: 'relative' }}>
+
+        {/* Cards — hidden on mobile when map is showing */}
+        {(!isMobile || !showMap) && (
+          <div style={{ width: isMobile ? '100%' : '400px', minWidth: isMobile ? 'unset' : '340px', overflowY: 'auto', background: '#f8fafc', borderRight: isMobile ? 'none' : '1px solid #e2e8f0', paddingBottom: isMobile ? '80px' : '0' }}>
+            {loading && <div style={{ padding: '40px', textAlign: 'center', color: '#64748b' }}>{'Loading homes...'}</div>}
+            {!loading && listings.length === 0 && <div style={{ padding: '40px', textAlign: 'center', color: '#64748b' }}>{'No homes match your filters.'}</div>}
+            {!loading && listings.map((listing) => (
+              <div
+                key={listing.id}
+                ref={(el: HTMLDivElement | null) => { cardRefs.current[listing.id] = el }}
+                onClick={() => handleCardClick(listing)}
+                style={{ background: activeListingId === listing.id ? '#eff6ff' : 'white', border: activeListingId === listing.id ? '2px solid #2563eb' : '1px solid #e2e8f0', borderRadius: '8px', margin: '12px', cursor: 'pointer', overflow: 'hidden' }}
+              >
+                {listing.image_url && <img src={listing.image_url} alt={listing.address} style={{ width: '100%', height: '180px', objectFit: 'cover' }} />}
+                <div style={{ padding: '12px' }}>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#1e293b' }}>{listing.price ? '$' + listing.price.toLocaleString() : 'Price N/A'}</div>
+                  <div style={{ fontSize: '13px', color: '#475569', margin: '4px 0' }}>
+                    {[listing.beds ? listing.beds + ' bd' : null, listing.baths ? listing.baths + ' ba' : null, listing.sqft ? listing.sqft.toLocaleString() + ' sqft' : null].filter(Boolean).join(' · ')}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#64748b' }}>{listing.address}</div>
+                  <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>{listing.communities?.name + ' · ' + listing.communities?.builder}</div>
+                  <div
+                    onClick={(e) => { e.stopPropagation(); window.location.href = '/community/' + listing.community_id }}
+                    style={{ display: 'inline-block', marginTop: '10px', background: '#2563eb', color: 'white', padding: '6px 14px', borderRadius: '4px', fontSize: '12px', cursor: 'pointer' }}
+                  >{'View Community'}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Map — full screen on mobile when toggled */}
+        {(!isMobile || showMap) && (
+          <div ref={mapContainer} style={{ flex: 1, height: '100%' }} />
+        )}
+
+        {/* Floating Map / List toggle button on mobile */}
+        {isMobile && (
+          <button
+            onClick={() => setShowMap(!showMap)}
+            style={{ position: 'fixed', bottom: '24px', left: '50%', transform: 'translateX(-50%)', background: '#0f172a', color: 'white', border: 'none', borderRadius: '24px', padding: '12px 24px', fontSize: '15px', fontWeight: '600', cursor: 'pointer', zIndex: 100, boxShadow: '0 4px 12px rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', gap: '8px' }}
+          >
+            {showMap ? '📋 Show List' : '🗺️ Show Map'}
+          </button>
+        )}
       </div>
     </main>
   )
-}
