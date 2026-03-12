@@ -24,7 +24,7 @@ export default function Home() {
   const [beds, setBeds] = useState(0)
   const [builder, setBuilder] = useState('')
   const [city, setCity] = useState('')
-  const [showMap, setShowMap] = useState(false)
+  const [showMap, setShowMap] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
   const [savedIds, setSavedIds] = useState<Set<number>>(new Set())
 
