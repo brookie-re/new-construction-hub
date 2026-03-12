@@ -26,6 +26,174 @@ COMMUNITY_URLS = [
         "city": "Madison",
         "latitude": 34.7721,
         "longitude": -86.7481
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/huntsville/highland-hills",
+        "name": "Highland Hills",
+        "city": "Huntsville",
+        "latitude": 34.8012,
+        "longitude": -86.6201
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/huntsville/wyndhurst-manor-south",
+        "name": "Wyndhurst Manor South",
+        "city": "Huntsville",
+        "latitude": 34.8350,
+        "longitude": -86.7200
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/huntsville/wyndhurst-manor",
+        "name": "Wyndhurst Manor",
+        "city": "Huntsville",
+        "latitude": 34.8380,
+        "longitude": -86.7220
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/owens-cross-roads/eagle-trace",
+        "name": "Eagle Trace",
+        "city": "Owens Cross Roads",
+        "latitude": 34.6312,
+        "longitude": -86.5401
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/owens-cross-roads/sequoyah-cove",
+        "name": "Sequoyah Cove",
+        "city": "Owens Cross Roads",
+        "latitude": 34.6280,
+        "longitude": -86.5350
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/huntsville/deerfield",
+        "name": "Deerfield",
+        "city": "Huntsville",
+        "latitude": 34.7650,
+        "longitude": -86.5100
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/meridianville/brier-creek",
+        "name": "Brier Creek",
+        "city": "Meridianville",
+        "latitude": 34.8720,
+        "longitude": -86.5680
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/gurley/wilson-cove",
+        "name": "Wilson Cove",
+        "city": "Gurley",
+        "latitude": 34.7180,
+        "longitude": -86.3720
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/gurley/the-willows-at-wilson-cove",
+        "name": "The Willows at Wilson Cove",
+        "city": "Gurley",
+        "latitude": 34.7200,
+        "longitude": -86.3700
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/madison/southern-landing",
+        "name": "Southern Landing",
+        "city": "Madison",
+        "latitude": 34.7580,
+        "longitude": -86.7650
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/harvest/oak-forest",
+        "name": "Oak Forest",
+        "city": "Harvest",
+        "latitude": 34.8650,
+        "longitude": -86.7450
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/harvest/trestle-point",
+        "name": "Trestle Point",
+        "city": "Harvest",
+        "latitude": 34.8700,
+        "longitude": -86.7500
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/madison/inverness-springs",
+        "name": "Inverness Springs",
+        "city": "Madison",
+        "latitude": 34.7490,
+        "longitude": -86.7580
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/meridianville/kensington",
+        "name": "Kensington",
+        "city": "Meridianville",
+        "latitude": 34.8800,
+        "longitude": -86.5750
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/athens/stoney-point",
+        "name": "Stoney Point",
+        "city": "Athens",
+        "latitude": 34.8021,
+        "longitude": -86.9710
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/madison/sweetwater-at-greenbrier-preserve",
+        "name": "Sweetwater at Greenbrier Preserve",
+        "city": "Madison",
+        "latitude": 34.7700,
+        "longitude": -86.7520
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/madison/greenbrier-estates-at-greenbrier-preserve",
+        "name": "Greenbrier Estates at Greenbrier Preserve",
+        "city": "Madison",
+        "latitude": 34.7680,
+        "longitude": -86.7500
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/madison/heritage-park-at-greenbrier-preserve",
+        "name": "Heritage Park at Greenbrier Preserve",
+        "city": "Madison",
+        "latitude": 34.7660,
+        "longitude": -86.7510
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/madison/greenbrier-preserve",
+        "name": "Greenbrier Preserve",
+        "city": "Madison",
+        "latitude": 34.7640,
+        "longitude": -86.7490
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/hazel-green/townsend-farms",
+        "name": "Townsend Farms",
+        "city": "Hazel Green",
+        "latitude": 34.9280,
+        "longitude": -86.6210
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/new-hope/huntland-estates",
+        "name": "Huntland Estates",
+        "city": "New Hope",
+        "latitude": 34.6950,
+        "longitude": -86.4020
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/athens/abbey-brook",
+        "name": "Abbey Brook",
+        "city": "Athens",
+        "latitude": 34.8050,
+        "longitude": -86.9680
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/athens/the-links-at-canebrake",
+        "name": "The Links at Canebrake",
+        "city": "Athens",
+        "latitude": 34.8030,
+        "longitude": -86.9650
+    },
+    {
+        "url": "https://www.drhorton.com/alabama/huntsville/athens/waters-edge",
+        "name": "Waters Edge",
+        "city": "Athens",
+        "latitude": 34.8010,
+        "longitude": -86.9630
     }
 ]
 

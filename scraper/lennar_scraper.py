@@ -9,14 +9,26 @@ from config import SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_KEY
 supabase = create_client(SUPABASE_URL, SUPABASE_ANON_KEY)
 supabase_admin = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
 
-COMMUNITY_URLS = [
-    {
-        "url": "https://www.lennar.com/new-homes/alabama/huntsville/huntsville/st-clair-place",
-        "name": "St. Clair Place",
-        "city": "Huntsville",
-        "latitude": 34.7850,
-        "longitude": -86.6350
-    }
+
+COMMUNITIES = [
+    {"name": "Bradford Station", "city": "Madison", "lat": 34.7490, "lng": -86.7580, "url": "https://www.lennar.com/new-homes/alabama/huntsville/madison/bradford-station"},
+    {"name": "Cedar Springs", "city": "Trinity", "lat": 34.5980, "lng": -87.0830, "url": "https://www.lennar.com/new-homes/alabama/huntsville/trinity/cedar-springs"},
+    {"name": "Clift Farm", "city": "Madison", "lat": 34.7450, "lng": -86.7480, "url": "https://www.lennar.com/new-homes/alabama/huntsville/madison/clift-farm"},
+    {"name": "Covington Cove", "city": "Athens", "lat": 34.8021, "lng": -86.9710, "url": "https://www.lennar.com/new-homes/alabama/huntsville/athens/covington-cove"},
+    {"name": "Craft Springs", "city": "Athens", "lat": 34.8050, "lng": -86.9680, "url": "https://www.lennar.com/new-homes/alabama/huntsville/athens/craft-springs"},
+    {"name": "Henderson Estates", "city": "Athens", "lat": 34.8030, "lng": -86.9650, "url": "https://www.lennar.com/new-homes/alabama/huntsville/athens/henderson-estates"},
+    {"name": "Highlands Trail", "city": "Harvest", "lat": 34.8650, "lng": -86.7450, "url": "https://www.lennar.com/new-homes/alabama/huntsville/harvest/highlands-trail"},
+    {"name": "Hitching Post Farms", "city": "Madison", "lat": 34.7600, "lng": -86.7500, "url": "https://www.lennar.com/new-homes/alabama/huntsville/madison/hitching-post-farms"},
+    {"name": "Kendall Trails", "city": "Toney", "lat": 34.8950, "lng": -86.6800, "url": "https://www.lennar.com/new-homes/alabama/huntsville/toney/kendall-trails"},
+    {"name": "Lucas Ferry Farms", "city": "Athens", "lat": 34.8010, "lng": -86.9630, "url": "https://www.lennar.com/new-homes/alabama/huntsville/athens/lucas-ferry-farms"},
+    {"name": "Natures Walk on the Flint", "city": "Owens Cross Roads", "lat": 34.6280, "lng": -86.5350, "url": "https://www.lennar.com/new-homes/alabama/huntsville/owens-cross-roads/natures-walk-on-the-flint"},
+    {"name": "Olde Savannah", "city": "New Market", "lat": 34.9080, "lng": -86.4480, "url": "https://www.lennar.com/new-homes/alabama/huntsville/new-market/olde-savannah"},
+    {"name": "Southern Springs", "city": "Harvest", "lat": 34.8700, "lng": -86.7500, "url": "https://www.lennar.com/new-homes/alabama/huntsville/harvest/southern-springs"},
+    {"name": "Southern Trail", "city": "Huntsville", "lat": 34.7650, "lng": -86.5100, "url": "https://www.lennar.com/new-homes/alabama/huntsville/huntsville/southern-trail"},
+    {"name": "The Reserve at the Retreat", "city": "Meridianville", "lat": 34.8800, "lng": -86.5750, "url": "https://www.lennar.com/new-homes/alabama/huntsville/meridianville/the-reserve-at-the-retreat"},
+    {"name": "The Retreat", "city": "Meridianville", "lat": 34.8780, "lng": -86.5730, "url": "https://www.lennar.com/new-homes/alabama/huntsville/meridianville/the-retreat"},
+    {"name": "St. Clair Place", "city": "Huntsville", "lat": 34.7850, "lng": -86.6350, "url": "https://www.lennar.com/new-homes/alabama/huntsville/huntsville/st-clair-place"},
+    {"name": "Whisper Woods", "city": "Athens", "lat": 34.8010, "lng": -86.9600, "url": "https://www.lennar.com/new-homes/alabama/huntsville/athens/whisper-woods"},
 ]
 
 def upload_image(image_url, address):
@@ -70,8 +82,8 @@ async def scrape_listings(page, community):
             'builder': 'Lennar',
             'city': community['city'],
             'state': 'AL',
-            'latitude': community['latitude'],
-            'longitude': community['longitude'],
+            'latitude': community['lat'],
+            'longitude': community['lng'],
         }).execute()
         community_id = insert.data[0]['id']
 
@@ -148,7 +160,7 @@ async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
         page = await browser.new_page()
-        for community in COMMUNITY_URLS:
+        for community in COMMUNITIES:
             await scrape_listings(page, community)
         await browser.close()
         print("\n✅ Done!")
