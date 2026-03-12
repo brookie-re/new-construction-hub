@@ -83,6 +83,12 @@ export default function Home() {
     })
   }, [communities, activeCommunityIds, listings])
 
+  useEffect(() => {
+  supabase.auth.getSession().then(({ data: { session } }) => {
+    if (!session) window.location.href = '/signup'
+    })
+  }, [])
+
   function handleCardClick(listing: any) {
     setActiveListingId(listing.id)
     if (map.current && listing.communities?.longitude && listing.communities?.latitude) {
